@@ -62,7 +62,7 @@ module.exports = function (app) {
         users.forEach((person) => {
             if (person.email === email) {
                 deletedUser = '' + person.firstName + ' ' + person.surName;
-                users.splice(users.indexOf(person) - 1, 2);
+                users.splice(users.indexOf(person), 1);
             }
         });
         fs.writeFile('db.json', JSON.stringify(users));
