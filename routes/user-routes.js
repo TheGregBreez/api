@@ -28,6 +28,24 @@ module.exports = function (app) {
     });
 
     //============================
+    //    GET BY EMAIL
+    //============================
+    app.get('/api/users/:email', (req, res) => {
+        let user = null;
+        const email = req.params.email;
+        users.forEach((person) => {
+            if(person.email === email) {
+                user = person;
+            }
+        });
+        if(user) {
+            res.send(user);
+        }else{
+            res.send('User doesn`t exists');
+        }
+    });
+
+    //============================
     //    PUT
     //============================
     app.put('/api/users/:email', (req, res) => {
@@ -65,7 +83,11 @@ module.exports = function (app) {
                 users.splice(users.indexOf(person), 1);
             }
         });
-        fs.writeFile('db.json', JSON.stringify(users));
-        res.send('User ' + deletedUser + ' deleted successfully');
+        if(deletedUser) {
+            fs.writeFile('db.json', JSON.stringify(users));
+            res.send('User ' + deletedUser + ' deleted successfully');
+        }else{
+            res.send('User doesn`t exists');
+        }
     })
 };
