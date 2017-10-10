@@ -15,16 +15,26 @@ module.exports = function (app) {
             'about': req.body.about,
             'email': req.body.email
         };
-        users.push(user);
-        fs.writeFile('db.json', JSON.stringify(users));
-        res.send(user)
+        try{
+            users.push(user);
+            fs.writeFile('db.json', JSON.stringify(users));
+            res.send(user)
+        }catch (err){
+            res.send(err)
+        }
+
     });
 
     //============================
     //    GET
     //============================
     app.get('/api/users', (req, res) => {
-        res.send(users)
+        try{
+            res.send(users)
+        }catch(err){
+            res.send(err);
+        }
+
     });
 
     //============================
@@ -67,8 +77,12 @@ module.exports = function (app) {
                 resUser = person;
             }
         });
-        fs.writeFile('db.json', JSON.stringify(users));
-        res.send(resUser)
+        if(resUser){
+            fs.writeFile('db.json', JSON.stringify(users));
+            res.send(resUser)
+        }else{
+            res.send('User doesn`t exists');
+        }
     });
 
     //============================
