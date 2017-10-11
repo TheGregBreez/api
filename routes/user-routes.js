@@ -29,12 +29,7 @@ module.exports = function (app) {
     //    GET
     //============================
     app.get('/api/users', (req, res) => {
-        try{
             res.send(users)
-        }catch(err){
-            res.send(err);
-        }
-
     });
 
     //============================
